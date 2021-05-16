@@ -15,12 +15,18 @@ Comment.init(
       type: DataTypes.STRING,
       validate: { len: [1] }
   },
+  creation_date:{
+    type: DataTypes.DATEONLY,
+    allowNull:false,
+    defaultValue: Date.now,
+  },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'user',
         key: 'id',
       },
+      
     },
     post_id: {
       type: DataTypes.INTEGER,

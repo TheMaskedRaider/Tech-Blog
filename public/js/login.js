@@ -13,6 +13,11 @@ const loginFormHandler = async (event) => {
 
     if (response.ok) {
       document.location.replace('/');
+      req.session.save(() => {
+        req.session.loggedIn = true;
+  
+        res.status(200).json(dbUserData);
+      })
     } else {
       alert('Failed to log in.');
     }
@@ -34,6 +39,11 @@ const signupFormHandler = async (event) => {
 
     if (response.ok) {
       document.location.replace('/');
+      req.session.save(() => {
+        req.session.loggedIn = true;
+  
+        res.status(200).json(dbUserData);
+      })
     } else {
       alert('Failed to sign up.');
     }
