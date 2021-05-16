@@ -1,3 +1,4 @@
+const sequelize = require('../config/connection');
 const router = require('express').Router();
 const { Post, User, Comment } = require('../models');
 // Import the custom middleware
@@ -6,21 +7,31 @@ const withAuth = require('../utils/auth');
 // GET all galleries for homepage
 router.get('/', withAuth, async (req, res) => {
   try {
-    // const dbGalleryData = await Post.findAll({
-    //   include: [
-    //     {
-    //       model: Post,
-    //       attributes: ['title', 'post_body', 'created_at'],
-    //     },
-    //   ],
-    // });
-
-    // const galleries = dbGalleryData.map((gallery) =>
-    //   gallery.get({ plain: true })
-    // );
-
+   const dbPostData= await Post.findAll({
+      attributes: [
+          'id',
+          'title',
+          'post_body',
+          'creation_date'
+      ],
+      include: [{
+              model: Comment,
+              attributes: ['id', 'comment_text', 'post_id', 'user_id'],
+              include: {
+                  model: User,
+                  attributes: ['name']
+              }
+          },
+          {
+              model: User,
+              attributes: ['name']
+          }
+      ]
+  })
+  const posts = dbPostData.map((post) => post.get({ plain: true })
+  );
     res.render('homepage', {
-      // galleries,
+      posts,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
