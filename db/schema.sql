@@ -1,3 +1,3 @@
-DROP DATABASE IF EXISTS mueseum_db;
+DROP DATABASE IF EXISTS blog_db;
 
-CREATE DATABASE mueseum_db;
+CREATE DATABASE blog_db;

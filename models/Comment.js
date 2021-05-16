@@ -26,7 +26,6 @@ Comment.init(
         model: 'user',
         key: 'id',
       },
-      
     },
     post_id: {
       type: DataTypes.INTEGER,
