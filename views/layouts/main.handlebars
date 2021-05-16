@@ -21,15 +21,24 @@
     {{else}}
     <a href="/login">Login</a>
     {{/if}}
+    {{#if loggedIn}}
+    <button class="btn-no-style"><a href="/new-post">Make a New Post</a></button>
+    {{/if}}
   </nav>
   <main>
     <div class="post">
       {{{body}}}
     </div>
   </main>
+  {{!-- <footer>
+    {{#if loggedIn}}
+    <button class="col-6 btn"><a href="/post">Test new post</a></button>
+    {{/if}}
+  </footer> --}}
   {{#if loggedIn}}
   <script src="/js/logout.js"></script>
   {{/if}}
 </body>
+
 
 </html>

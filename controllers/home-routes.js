@@ -13,15 +13,9 @@ router.get('/', withAuth, async (req, res) => {
       include: [{
         model: Comment,
         attributes: ['id', 'comment_text', 'post_id', 'user_id'],
-        include: {
-          model: User,
-          attributes: ['name']
-        }
+        include: {model: User,attributes: ['name']}
       },
-      {
-        model: User,
-        attributes: ['name']
-      }
+      {model: User,attributes: ['name']}
       ]
 
     })
@@ -50,18 +44,11 @@ router.get('/dashboard', withAuth, async (req, res) => {
          user_id: req.session.userId.id
        },
        attributes: ['id', 'title', 'post_body', 'creation_date'],
-       include: [{
-        model: Comment,
+       include: [{model: Comment,
         attributes: ['id', 'comment_text', 'post_id', 'user_id', 'creation_date'],
-         include: {
-           model: User,
-           attributes: ['name']
-         }
+         include: {model: User,attributes: ['name']}
        },
-       {
-         model: User,
-         attributes: ['name']
-       }
+       {model: User,attributes: ['name']}
        ]
      })
 
@@ -79,6 +66,39 @@ router.get('/dashboard', withAuth, async (req, res) => {
     });
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+router.get('/post/:id', async (req, res) => {
+ try {
+ const dbPostData = await Post.findOne({
+    where: {
+      id: req.params.id,
+    },
+    attributes: ['id', 'title', 'post_body', 'creation_date',  'user_id'],
+    include: [{model: User,attributes: ['name'],},
+      {
+        model: Comment,
+        attributes: ['id', 'comment_text', 'creation_date', 'user_id'],
+        include: [{model: User, attributes: ['name'],},
+        ],
+      },
+    ],
+  })
+  console.log('Hello! I got through the post!')
+  const myPost = dbPostData.get({ plain: true });
+  console.log("I made it past the my post set")
+console.log(myPost)
+console.log("attempting to show only comments!")
+const comments = myPost.comments
+console.log(comments," are the comments I found!")
+  res.render('view-post', {
+    myPost,
+    comments,
+    loggedIn: req.session.loggedIn,
+  });
+  }  catch (err) {
+    res.status(500).json(err); 
   }
 });
 
