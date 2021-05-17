@@ -22,18 +22,37 @@ router.post('/', withAuth, async (req, res) => {
     console.log("updating...")
     console.log(req.params.id)
     try {
-      const updatePost = await Post.update({
+      const updatePost = await Post.update(req.body,{
         where: {
             id: req.params.id
         },
-        ...req.body,
+
       });
       console.log("updated!")
       res.status(200).json(updatePost);
     } catch (err) {
       res.status(400).json(err);
       console.log(req.body)
-      console.log(updatePost)
+    }
+  });
+
+  router.delete('/:id', async (req, res) => {
+    // delete one product by its `id` value
+    try {
+      const postData = await Post.destroy({
+        where: {
+          id: req.params.id
+        }
+      });
+  
+      if (!postData) {
+        res.status(404).json({ message: 'No post found with this id!' });
+        return;
+      }
+  
+      res.status(200).json(postData);
+    } catch (err) {
+      res.status(500).json(err);
     }
   });
 

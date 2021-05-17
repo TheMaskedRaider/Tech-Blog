@@ -14,7 +14,7 @@ const postUpdateFormHandle = async (event) => {
 
       if (response.ok) {
         console.log("I've been clicked!")
-        document.location.replace('/');
+        document.location.replace('/dashboard');
       } else {
         alert('Failed to update.');
         console.log(title);
