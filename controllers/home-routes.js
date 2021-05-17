@@ -22,13 +22,10 @@ router.get('/', withAuth, async (req, res) => {
 
     const posts = dbPostData.map((post) => post.get({ plain: true })
     );
-    console.log(posts)
     res.render('homepage', {
       posts,
       loggedIn: req.session.loggedIn,
     });
-
-    console.log(req.session.userId, "testing session uid")
 
   } catch (err) {
     console.log(err);
@@ -54,10 +51,6 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     const posts = dbPostData.map((post) => post.get({ plain: true }));
     const userName = req.session.userId.name
-
-    console.log(req.session.userId, "testing session uid")
-    console.log ("testing Post catch")
-    console.log(posts)
 
     res.render('dashboard', {
       userName,
@@ -85,13 +78,12 @@ router.get('/post/:id', async (req, res) => {
       },
     ],
   })
-  console.log('Hello! I got through the post!')
+
   const myPost = dbPostData.get({ plain: true });
-  console.log("I made it past the my post set")
-console.log(myPost)
-console.log("attempting to show only comments!")
+
+
 const comments = myPost.comments
-console.log(comments," are the comments I found!")
+
   res.render('view-post', {
     myPost,
     comments,
