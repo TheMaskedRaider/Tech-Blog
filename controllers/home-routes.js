@@ -34,7 +34,6 @@ router.get('/', withAuth, async (req, res) => {
 });
 
 router.get('/dashboard', withAuth, async (req, res) => {
-  console.log('I am attempting to load the page!')
   try {
      const dbPostData = await Post.findAll({
        where: {
@@ -106,6 +105,11 @@ router.get('/login', (req, res) => {
 router.get('/newpost', (req, res) => {
 
   res.render('new-post');
+});
+
+router.get('/updatepost/:id', async (req, res) => {
+
+  res.render('update-post');
 });
 
 module.exports = router;

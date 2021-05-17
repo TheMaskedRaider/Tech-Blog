@@ -3,12 +3,12 @@ const postUpdateFormHandle = async (event) => {
   
     const title = document.querySelector('#post-title').value.trim();
     const post_body = document.querySelector('#post-body').value.trim();
-    const post_id = document.querySelector('#custId').value.trim();
+    const id = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
   
     if (title && post_body) {
-      const response = await fetch('/api/posts', {
-        method: 'POST',
-        body: JSON.stringify({ title, post_body, post_id }),
+      const response = await fetch('/api/posts/'+ id, {
+        method: 'PUT',
+        body: JSON.stringify({ title, post_body }),
         headers: { 'Content-Type': 'application/json' },
       });
 
@@ -16,7 +16,7 @@ const postUpdateFormHandle = async (event) => {
         console.log("I've been clicked!")
         document.location.replace('/');
       } else {
-        alert('Failed to log in.');
+        alert('Failed to update.');
         console.log(title);
         console.log(post_body);
       }
@@ -25,5 +25,5 @@ const postUpdateFormHandle = async (event) => {
 
   
   document
-  .querySelector('.new-post-form')
+  .querySelector('.update-post-form')
   .addEventListener('submit', postUpdateFormHandle);

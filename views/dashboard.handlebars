@@ -3,6 +3,7 @@
 
     {{#each posts as |post| }}
         {{> post-data post}}
+ <button class="btn"><a href="/updatepost/{{post.id}}">Update this post</a></button>
     {{/each}}
 
 </article>

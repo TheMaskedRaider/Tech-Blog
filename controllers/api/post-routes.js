@@ -18,16 +18,22 @@ router.post('/', withAuth, async (req, res) => {
     }
   });
 
-  router.set('/', withAuth, async (req, res) => {
+  router.put('/:id', withAuth, async (req, res) => {
     console.log("updating...")
+    console.log(req.params.id)
     try {
       const updatePost = await Post.update({
+        where: {
+            id: req.params.id
+        },
         ...req.body,
       });
       console.log("updated!")
       res.status(200).json(updatePost);
     } catch (err) {
       res.status(400).json(err);
+      console.log(req.body)
+      console.log(updatePost)
     }
   });
 
