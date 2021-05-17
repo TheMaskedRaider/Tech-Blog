@@ -1,6 +1,15 @@
 <article class="post">
     {{> post-data myPost}}
+    <form class="form new-comment-form">
+    <div class="form-group">
+        <h4 for="comment-text">Leave a comment:</h4>
+        <textarea class="form-input" id="comment-text" name="comment-text"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Post Comment</button>
+    </form>
+       
     {{#each comments as |comment|}}
         {{> comment-data comment}}
     {{/each}}
 </article>
+<script src="/js/create-comment.js"></script>
